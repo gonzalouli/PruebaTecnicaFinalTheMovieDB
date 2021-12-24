@@ -31,7 +31,7 @@ Para este prouyecto usaremos React+Router y algo de LocalStorage. Asi como la AP
 #### Instalación
 Para la instalación del proyecto abriremos la carpeta principal del proyecto con la terminal y ejecutaremos el siguiente comando
 ###### `npm install` ####
-Para poder generar las peliculas necesitamos crear un carchivo llamado .env en el directorio raiz del projecto e insertar la api con el nombre de REACT_APP_API_KEY=<APIKEY>
+Para poder generar las peliculas necesitamos crear un carchivo llamado .env en el directorio raiz del projecto e insertar la api con el nombre de REACT_APP_API_KEY=TU_API_KEY_VA_AQUI
 
 #### Ejecución ####
 Ejecutaremos el servidor de React con el siguiente comando

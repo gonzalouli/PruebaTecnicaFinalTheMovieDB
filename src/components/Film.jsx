@@ -1,25 +1,29 @@
 import React, {useEffect, useState} from 'react'
 import '../styles/Film.css'
-import axios from 'axios'
 
 export default function Film(props) {
-    const [filmgenre, setFilmgenre]= useState([])
+    const [filmgenre, setFilmgenre]= useState("")
 
-    useEffect(()=>{
-        showGenres(props)
+    useEffect( ()=>{
+        // console.log(props.pelicula.genre_ids.length)
+        let i=0,j=0;
+        while(i<props.pelicula.genre_ids.length){
+
+            while(j<props.genres.length){
+                if(props.pelicula.genre_ids[i]==props.genres[i].id){
+                    let temp = filmgenre
+                    setFilmgenre(temp.concat(" "+props.genres[i].name))
+                    // console.log(props.genres[i])
+                }
+                j++;
+            }
+            i++;
+
+        }
+        // console.log(filmgenre)
+        
     },[])
 
-    const showGenres = (props)=>{
-            props.pelicula.genre_ids.map(id =>
-                {   
-                    props.genres.map(genre=>{ 
-                            if(id==genre.id){
-                                setFilmgenre([...filmgenre, genre.name])
-                            }
-                    })
-                })
-        
-    }
 
     return (
         
@@ -33,7 +37,7 @@ export default function Film(props) {
                 <li className="list-group-item">Release date: {props.pelicula.release_date}</li>
                 <li className="list-group-item">Votes: {props.pelicula.vote_average}</li>
                 <li className="list-group-item">Popularity: {props.pelicula.popularity}</li>
-                <li className="list-group-item">Genres: {filmgenre}</li>
+                <li className="list-group-item">Genre: {filmgenre}</li>
             </ul>
             
         </div>

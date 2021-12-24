@@ -1,0 +1,13 @@
+.card{
+    background-color:rgb(165, 189, 221);
+    margin: 2%;
+}
+
+.card-img-top{
+    display: flex;
+    width: 50%;
+    height: 50%;
+    align-items: center;
+    margin: 0 auto;
+
+}

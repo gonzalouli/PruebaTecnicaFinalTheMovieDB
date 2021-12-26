@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import '../styles/Home.css'
 import { Link  } from 'react-router-dom';
+import axios from 'axios'
 
 export default function Home() {
 
@@ -10,6 +11,10 @@ export default function Home() {
     useEffect( ()=>{
         window.localStorage.setItem("order",order)
         window.localStorage.setItem("number",number)
+        axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`).then( async res=>{
+            window.localStorage.setItem('genres',JSON.stringify(res.data.genres))
+
+        })
     })
 
     return (
@@ -31,10 +36,10 @@ export default function Home() {
                     window.localStorage.setItem("number",number)
                 }}></input>
             </div>
-            <Link to='/topten' className="btn btn-primary">Top Ten Films filter (Vote average)</Link>
-            <Link to='/title' className="btn btn-primary">Films by Title (filter popularity)</Link>
-            <Link to='/originaltitle' className="btn btn-primary">Films by Original Title (filter popularity)</Link>
-            <Link to='/overview' className="btn btn-primary">Films by Overview (filter popularity)</Link>
+            <Link to='/topten' className="btn btn-primary">Top Diez Peliculas Populares</Link>
+            <Link to='/title' className="btn btn-primary">Peliculas por Titulo filtradas por Popularidad</Link>
+            <Link to='/originaltitle' className="btn btn-primary">Peliculas por Titulo Original filtradas por Popularidad</Link>
+            <Link to='/overview' className="btn btn-primary">Peliculas por Sinopsis filtradas por Popularidad</Link>
 
         </div>
         </Fragment>

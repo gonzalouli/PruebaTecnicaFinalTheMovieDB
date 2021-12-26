@@ -7,7 +7,7 @@ export default function FilmsOverview() {
     const [text, setText] = useState("")
     const [sended, setSended] = useState(false)
     const [films, setFilm] = useState([])
-    const [genres, setGenres] = useState([])
+    const [genres, setGenres] = useState(JSON.parse(window.localStorage.getItem('genres')))
 
 
     const handleFilms = async (e)=>{
@@ -38,16 +38,14 @@ export default function FilmsOverview() {
                 const over = film.overview.toLowerCase()
                 const textLowe = text.toLowerCase()
 
-                if(over.includes(textLowe))
+                if(over.includes(textLowe)){
+                    film.poster_path==null ? film.poster_path=`${process.env.PUBLIC_URL}img/default-film-img.jpg` : film.poster_path =`https://image.tmdb.org/t/p/original/${film.poster_path}`
                     return film
-                else return null;
+                } else return null;
             })
 
             setFilm(temp.slice(0, number))
             
-            axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`).then( async res=>{
-                setGenres(res.data)
-            })
             setSended(true)
             return
         })

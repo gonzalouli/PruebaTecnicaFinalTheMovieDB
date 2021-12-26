@@ -4,38 +4,34 @@ import Film from '../components/Film'
 
 function TopTen() {
     const [films, setFilm] = useState([])
-    const [genres, setGenres] = useState([])
+    const [genres, setGenres] = useState(JSON.parse(window.localStorage.getItem('genres')))
 
     useEffect(async()=>{
         await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_API_KEY}&language=es-ES&page=1`).then(res=> {
 
-            const number = window.localStorage.getItem("number")
             
             res.data.results.sort( (a,b)=>{
                 if(window.localStorage.getItem("order")=="Asc"){
-                    if(a.vote_average>b.vote_average)
+                    if(a.popularity>b.popularity)
                         return 1
-                    if(a.vote_average<b.vote_average)
+                    if(a.popularity<b.popularity)
                         return -1
                     else
                         return 0
                 }else{
-                    if(a.vote_average>b.vote_average)
+                    if(a.popularity>b.popularity)
                         return -1
-                    if(a.vote_average<b.vote_average)
+                    if(a.popularity<b.popularity)
                         return 1
                     else
                         return 0
                 }
             })
 
-            setFilm(res.data.results.slice(0, number))
-
-            axios.get(`https://api.themoviedb.org/3/genre/movie/list?api_key=${process.env.REACT_APP_API_KEY}&language=en-US`).then( async res=>{
-                setGenres(res.data.genres)
-                // console.log(res.data.genres)
-
-            })
+            res.data.results.filter(film =>
+            film.poster_path==null ? film.poster_path=`${process.env.PUBLIC_URL}img/default-film-img.jpg` : film.poster_path =`https://image.tmdb.org/t/p/original/${film.poster_path}`
+            )
+            setFilm(res.data.results.slice(0, 10))
 
             return
         })

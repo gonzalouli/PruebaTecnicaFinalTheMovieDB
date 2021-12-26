@@ -2,19 +2,25 @@ import React, {useEffect, useState} from 'react'
 import '../styles/Film.css'
 
 export default function Film(props) {
-    const [filmgenre, setFilmgenre]= useState("")
+    const [filmgenre, setFilmgenre]= useState([])
 
     useEffect( ()=>{
-        const {genres, pelicula} = props
-        genres.map( genre=>{
-            pelicula.genre_ids.map( id=>{
-                if(id===genre.id)
-                    setFilmgenre(filmgenre.concat(" "+genre.name))
-                
+        const temp = []
+        try {
+            const {genres, pelicula} = props
+            genres.map( genre=>{
+                // console.log(genre.id)
+                pelicula.genre_ids.map( id=>{
+                    if(id===genre.id){
+                        temp.push(genre.name)
+                        temp.push(", ")
+                    }
+                })
             })
-        })
-        if(filmgenre=="")
-            setFilmgenre("Genero no encontrado")
+            console.log(temp)
+        }catch(e){console.error(e.message)}
+        temp.splice(temp.length-1)
+        setFilmgenre(temp)
     },[])
 
 
@@ -30,7 +36,7 @@ export default function Film(props) {
                 <li className="list-group-item">Fecha de salida: {props.pelicula.release_date}</li>
                 <li className="list-group-item">Votos: {props.pelicula.vote_average}</li>
                 <li className="list-group-item">Popularidad: {props.pelicula.popularity}</li>
-                <li className="list-group-item">Género: {filmgenre}</li>
+                <li className="list-group-item">Género: {filmgenre.length==0 ? <p>No encontrado</p> : filmgenre}</li>
             </ul>
             
         </div>

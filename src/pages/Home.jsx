@@ -5,7 +5,7 @@ import axios from 'axios'
 
 export default function Home() {
 
-    const [order, setOrder] = useState("Asc")
+    const [order, setOrder] = useState("Desc")
     const [number, setNumber] = useState(1)
 
     useEffect( ()=>{
@@ -27,8 +27,9 @@ export default function Home() {
                     setOrder(e.target.value)
                     window.localStorage.setItem("order",order)
                 }} >
-                    <option className="option">Asc</option>
                     <option className="option">Desc</option>
+                    <option className="option">Asc</option>
+
                 </select>
                 <label>Cantidad: </label>
                 <input className="select" type="number" min="1" max="100" onChange={e=>{
